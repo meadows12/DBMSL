@@ -1,0 +1,608 @@
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mdatabase          |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sys                |
+| te_31239           |
+| world              |
++--------------------+
+8 rows in set (0.01 sec)
+
+mysql> use te_31239;
+Database changed
+mysql> create table Customer(cust_no int PRIMARY KEY,cust_fname varchar(20),cust_lname varchar(20),cust_company varchar(20),cust_addr varchar(30),city varchar(10),cust_phone bigint(15));
+Query OK, 0 rows affected, 1 warning (0.16 sec)
+
+mysql> desc Customer;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| cust_no      | int         | NO   | PRI | NULL    |       |
+| cust_fname   | varchar(20) | YES  |     | NULL    |       |
+| cust_lname   | varchar(20) | YES  |     | NULL    |       |
+| cust_company | varchar(20) | YES  |     | NULL    |       |
+| cust_addr    | varchar(30) | YES  |     | NULL    |       |
+| city         | varchar(10) | YES  |     | NULL    |       |
+| cust_phone   | bigint      | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> create table Author(author_no int PRIMARY KEY,author_name varchar(20),country varchar(20));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| customer           |
++--------------------+
+2 rows in set (0.01 sec)
+
+mysql> create table Publisher(publisher_no int PRIMARY KEY,publisher_name varchar(20),publisher_addr varchar(30),year int);
+Query OK, 0 rows affected (0.14 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| customer           |
+| publisher          |
++--------------------+
+3 rows in set (0.01 sec)
+
+mysql> create table Book(ISBN bigint PRIMARY KEY,title varchar(20),unit_price int,author_no int,publisher_no int,pub_year int,FOREIGN KEY(author_no) REFERENCES Author(author_no),FOREIGN KEY(publisher_no) REFERENCES Publisher(publisher_no));
+Query OK, 0 rows affected (0.16 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| book               |
+| customer           |
+| publisher          |
++--------------------+
+4 rows in set (0.01 sec)
+
+mysql> create table orderT(order_no int PRIMARY KEY,cust_no int,ISBN bigint,qty int,odate date,FOREIGN KEY(cust_no) REFERENCES Customer(cust_no),FOREIGN KEY(ISBN) REFERENCES Book(ISBN));
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| book               |
+| customer           |
+| ordert             |
+| publisher          |
++--------------------+
+5 rows in set (0.01 sec)
+mysql> desc Customer;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| cust_no      | int         | NO   | PRI | NULL    |       |
+| cust_fname   | varchar(20) | YES  |     | NULL    |       |
+| cust_lname   | varchar(20) | YES  |     | NULL    |       |
+| cust_company | varchar(20) | YES  |     | NULL    |       |
+| cust_addr    | varchar(30) | YES  |     | NULL    |       |
+| city         | varchar(10) | YES  |     | NULL    |       |
+| cust_phone   | bigint      | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc author;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| author_no   | int         | NO   | PRI | NULL    |       |
+| author_name | varchar(20) | YES  |     | NULL    |       |
+| country     | varchar(20) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc publisher;
++----------------+-------------+------+-----+---------+-------+
+| Field          | Type        | Null | Key | Default | Extra |
++----------------+-------------+------+-----+---------+-------+
+| publisher_no   | int         | NO   | PRI | NULL    |       |
+| publisher_name | varchar(20) | YES  |     | NULL    |       |
+| publisher_addr | varchar(30) | YES  |     | NULL    |       |
+| year           | int         | YES  |     | NULL    |       |
++----------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc book;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| ISBN         | bigint      | NO   | PRI | NULL    |       |
+| title        | varchar(20) | YES  |     | NULL    |       |
+| unit_price   | int         | YES  |     | NULL    |       |
+| author_no    | int         | YES  | MUL | NULL    |       |
+| publisher_no | int         | YES  | MUL | NULL    |       |
+| pub_year     | int         | YES  |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> desc ordert;
++----------+--------+------+-----+---------+-------+
+| Field    | Type   | Null | Key | Default | Extra |
++----------+--------+------+-----+---------+-------+
+| order_no | int    | NO   | PRI | NULL    |       |
+| cust_no  | int    | YES  | MUL | NULL    |       |
+| ISBN     | bigint | YES  | MUL | NULL    |       |
+| qty      | int    | YES  |     | NULL    |       |
+| odate    | date   | YES  |     | NULL    |       |
++----------+--------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+mysql> insert into Customer values(101,'Saili','Sharma','abc','Dhankawdi','Pune',9209182735);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into Customer values(102,'Praveen','Thorat','abc','Kothrude','Pune',9378471029);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(103,'Rohit','Sharma','bcd','Dadar','Mumbai',9201777281);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> show Customer;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Customer' at line 1
+mysql> select *from Customer;
++---------+------------+------------+--------------+-----------+--------+------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr | city   | cust_phone |
++---------+------------+------------+--------------+-----------+--------+------------+
+|     101 | Saili      | Sharma     | abc          | Dhankawdi | Pune   | 9209182735 |
+|     102 | Praveen    | Thorat     | abc          | Kothrude  | Pune   | 9378471029 |
+|     103 | Rohit      | Sharma     | bcd          | Dadar     | Mumbai | 9201777281 |
++---------+------------+------------+--------------+-----------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> insert into Customer values(104,'Virat','Kohli','afk','Shivajinagar','Mumbai',9834728902);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select *from Customer;
++---------+------------+------------+--------------+--------------+--------+------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr    | city   | cust_phone |
++---------+------------+------------+--------------+--------------+--------+------------+
+|     101 | Saili      | Sharma     | abc          | Dhankawdi    | Pune   | 9209182735 |
+|     102 | Praveen    | Thorat     | abc          | Kothrude     | Pune   | 9378471029 |
+|     103 | Rohit      | Sharma     | bcd          | Dadar        | Mumbai | 9201777281 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar | Mumbai | 9834728902 |
++---------+------------+------------+--------------+--------------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Customer values(105,'Rahul','Raj','bcd','Avadi','Chennai',5362789102);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(106,'Purva','Kulkarni','afk','Dadar','Mumbai',9022188739);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(107,'Shailesh','Thorat','hks','Balewadi','Pune',95536777281);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(108,'Harish','Rahane','kja','Mira road','Delhi',9355672892);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(109,'Harsh','Pandey','jsj','Kalyan','Mumbai',9553672892);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Customer values(110,'Raj','Mohan','jsj','Tiruvanantapuram','Kerala',9663778273);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from Customer;
++---------+------------+------------+--------------+------------------+---------+-------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr        | city    | cust_phone  |
++---------+------------+------------+--------------+------------------+---------+-------------+
+|     101 | Saili      | Sharma     | abc          | Dhankawdi        | Pune    |  9209182735 |
+|     102 | Praveen    | Thorat     | abc          | Kothrude         | Pune    |  9378471029 |
+|     103 | Rohit      | Sharma     | bcd          | Dadar            | Mumbai  |  9201777281 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar     | Mumbai  |  9834728902 |
+|     105 | Rahul      | Raj        | bcd          | Avadi            | Chennai |  5362789102 |
+|     106 | Purva      | Kulkarni   | afk          | Dadar            | Mumbai  |  9022188739 |
+|     107 | Shailesh   | Thorat     | hks          | Balewadi         | Pune    | 95536777281 |
+|     108 | Harish     | Rahane     | kja          | Mira road        | Delhi   |  9355672892 |
+|     109 | Harsh      | Pandey     | jsj          | Kalyan           | Mumbai  |  9553672892 |
+|     110 | Raj        | Mohan      | jsj          | Tiruvanantapuram | Kerala  |  9663778273 |
++---------+------------+------------+--------------+------------------+---------+-------------+
+10 rows in set (0.00 sec)
+
+mysql> select *from Author;
+Empty set (0.03 sec)
+
+mysql> insert into Author values(201,'Chetan','India');
+mysql> insert into Author values(202,'Dan Brown','United States');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Author values(203,'Willian Shakespeare','United Kingdom');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Author values(204,'Sarah Williams','United Kingdom');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from Author;
++-----------+---------------------+----------------+
+| author_no | author_name         | country        |
++-----------+---------------------+----------------+
+|       201 | Chetan              | India          |
+|       202 | Dan Brown           | United States  |
+|       203 | Willian Shakespeare | United Kingdom |
+|       204 | Sarah Williams      | United Kingdom |
++-----------+---------------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Publisher values(301,'Penguin','United States of America',2016);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> select *from Publisher;
++--------------+----------------+--------------------------+------+
+| publisher_no | publisher_name | publisher_addr           | year |
++--------------+----------------+--------------------------+------+
+|          301 | Penguin        | United States of America | 2016 |
++--------------+----------------+--------------------------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into Publisher values(302,'Continental','Pune',2015);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Publisher values(303,'Goosebumps','United States of America',2016);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Publisher values(304,'Mcmilan','England',2014);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from Publisher;
++--------------+----------------+--------------------------+------+
+| publisher_no | publisher_name | publisher_addr           | year |
++--------------+----------------+--------------------------+------+
+|          301 | Penguin        | United States of America | 2016 |
+|          302 | Continental    | Pune                     | 2015 |
+|          303 | Goosebumps     | United States of America | 2016 |
+|          304 | Mcmilan        | England                  | 2014 |
++--------------+----------------+--------------------------+------+
+4 rows in set (0.00 sec)
+
+mysql> insert into Book values(401,'Harry potter',350,201,301,2000);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into Book values(402,'Radhe',300,202,302,2004);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Book values(403,'Maze Runner',200,204,304,2015);
+mysql> insert into Book values(404, 'Hercules', 375, 201, 301, 2000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Book values(405, 'Shiva', 400, 203, 303, 2006);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into Book values(406, 'Chava', 500, 204, 304, 2015);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from Book;
++------+--------------+------------+-----------+--------------+----------+
+| ISBN | title        | unit_price | author_no | publisher_no | pub_year |
++------+--------------+------------+-----------+--------------+----------+
+|  401 | Harry potter |        350 |       201 |          301 |     2000 |
+|  402 | Radhe        |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner  |        200 |       204 |          304 |     2015 |
+|  404 | Hercules     |        375 |       201 |          301 |     2000 |
+|  405 | Shiva        |        400 |       203 |          303 |     2006 |
+|  406 | Chava        |        500 |       204 |          304 |     2015 |
++------+--------------+------------+-----------+--------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> insert into ordert values(501,101,401,2,'2020-11-05');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into ordert values(502,102,403,3,'2020-11-06');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into ordert values(503,103,405,1,'2020-10-07');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ordert values(504,104,406,5,'2020-08-05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from ordert;
++----------+---------+------+------+------------+
+| order_no | cust_no | ISBN | qty  | odate      |
++----------+---------+------+------+------------+
+|      501 |     101 |  401 |    2 | 2020-11-05 |
+|      502 |     102 |  403 |    3 | 2020-11-06 |
+|      503 |     103 |  405 |    1 | 2020-10-07 |
+|      504 |     104 |  406 |    5 | 2020-08-05 |
++----------+---------+------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql>#2.Display all customer details with city pune and mumbai and customer first name starting with 'p' or 'h'. 
+
+mysql> select *from Customer WHERE(city = 'Pune' or city = 'Mumbai') and (cust_fname LIKE 'P%' or cust_fname LIKE 'H%');
++---------+------------+------------+--------------+-----------+--------+------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr | city   | cust_phone |
++---------+------------+------------+--------------+-----------+--------+------------+
+|     102 | Praveen    | Thorat     | abc          | Kothrude  | Pune   | 9378471029 |
+|     106 | Purva      | Kulkarni   | afk          | Dadar     | Mumbai | 9022188739 |
+|     109 | Harsh      | Pandey     | jsj          | Kalyan    | Mumbai | 9553672892 |
++---------+------------+------------+--------------+-----------+--------+------------+
+3 rows in set (0.00 sec)  
+
+mysql> select *from Customer;
++---------+------------+------------+--------------+------------------+---------+-------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr        | city    | cust_phone  |
++---------+------------+------------+--------------+------------------+---------+-------------+
+|     101 | Saili      | Sharma     | abc          | Dhankawdi        | Pune    |  9209182735 |
+|     102 | Praveen    | Thorat     | abc          | Kothrude         | Pune    |  9378471029 |
+|     103 | Rohit      | Sharma     | bcd          | Dadar            | Mumbai  |  9201777281 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar     | Mumbai  |  9834728902 |
+|     105 | Rahul      | Raj        | bcd          | Avadi            | Chennai |  5362789102 |
+|     106 | Purva      | Kulkarni   | afk          | Dadar            | Mumbai  |  9022188739 |
+|     107 | Shailesh   | Thorat     | hks          | Balewadi         | Pune    | 95536777281 |
+|     108 | Harish     | Rahane     | kja          | Mira road        | Delhi   |  9355672892 |
+|     109 | Harsh      | Pandey     | jsj          | Kalyan           | Mumbai  |  9553672892 |
+|     110 | Raj        | Mohan      | jsj          | Tiruvanantapuram | Kerala  |  9663778273 |
++---------+------------+------------+--------------+------------------+---------+-------------+
+10 rows in set (0.00 sec)
+
+mysql># 3.lists the number of different customer cities
+
+mysql> select count(distinct city) as DistinctCity from Customer;
++--------------+
+| DistinctCity |
++--------------+
+|            5 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> # 4.Give 5% increase in price of the books with publishing year 2015.
+
+mysql> Update Book set unit_price = 1.05*unit_price where pub_year = 2015;
+Query OK, 2 rows affected (0.01 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select *from Book;
++------+--------------+------------+-----------+--------------+----------+
+| ISBN | title        | unit_price | author_no | publisher_no | pub_year |
++------+--------------+------------+-----------+--------------+----------+
+|  401 | Harry potter |        350 |       201 |          301 |     2000 |
+|  402 | Radhe        |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner  |        210 |       204 |          304 |     2015 |
+|  404 | Hercules     |        375 |       201 |          301 |     2000 |
+|  405 | Shiva        |        400 |       203 |          303 |     2006 |
+|  406 | Chava        |        525 |       204 |          304 |     2015 |
++------+--------------+------------+-----------+--------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> # 6.Find the names of authors living in India or Australia .
+
+mysql> select author_name,country from Author where country = 'India' UNION select author_name,country from Author where country = 'Australia';
++-------------+---------+
+| author_name | country |
++-------------+---------+
+| Chetan      | India   |
++-------------+---------+
+1 row in set (0.00 sec)
+
+mysql> select *from publisher;
++--------------+----------------+--------------------------+------+
+| publisher_no | publisher_name | publisher_addr           | year |
++--------------+----------------+--------------------------+------+
+|          301 | Penguin        | United States of America | 2016 |
+|          302 | Continental    | Pune                     | 2015 |
+|          303 | Goosebumps     | United States of America | 2016 |
+|          304 | Mcmilan        | England                  | 2014 |
++--------------+----------------+--------------------------+------+
+4 rows in set (0.00 sec)
+
+mysql> # 7.Find the publishers who are established in year 2015 as well as in 2016  
+
+mysql> select *from Publisher where year = 2015 or year = 2016;
++--------------+----------------+--------------------------+------+
+| publisher_no | publisher_name | publisher_addr           | year |
++--------------+----------------+--------------------------+------+
+|          301 | Penguin        | United States of America | 2016 |
+|          302 | Continental    | Pune                     | 2015 |
+|          303 | Goosebumps     | United States of America | 2016 |
++--------------+----------------+--------------------------+------+
+3 rows in set (0.00 sec)
+
+mysql> select *from Book;
++------+--------------+------------+-----------+--------------+----------+
+| ISBN | title        | unit_price | author_no | publisher_no | pub_year |
++------+--------------+------------+-----------+--------------+----------+
+|  401 | Harry potter |        350 |       201 |          301 |     2000 |
+|  402 | Radhe        |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner  |        210 |       204 |          304 |     2015 |
+|  404 | Hercules     |        375 |       201 |          301 |     2000 |
+|  405 | Shiva        |        400 |       203 |          303 |     2006 |
+|  406 | Chava        |        525 |       204 |          304 |     2015 |
++------+--------------+------------+-----------+--------------+----------+
+6 rows in set (0.00 sec)
+
+mysql># 8.Find the book having maximum price and find titles of book having price between 300 and 400.
+
+mysql> select *from Book where unit_price = (select max(unit_price) from Book);
++------+-------+------------+-----------+--------------+----------+
+| ISBN | title | unit_price | author_no | publisher_no | pub_year |
++------+-------+------------+-----------+--------------+----------+
+|  406 | Chava |        525 |       204 |          304 |     2015 |
++------+-------+------------+-----------+--------------+----------+
+1 row in set (0.00 sec)
+
+mysql> select *from Book;
++------+--------------+------------+-----------+--------------+----------+
+| ISBN | title        | unit_price | author_no | publisher_no | pub_year |
++------+--------------+------------+-----------+--------------+----------+
+|  401 | Harry potter |        350 |       201 |          301 |     2000 |
+|  402 | Radhe        |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner  |        210 |       204 |          304 |     2015 |
+|  404 | Hercules     |        375 |       201 |          301 |     2000 |
+|  405 | Shiva        |        400 |       203 |          303 |     2006 |
+|  406 | Chava        |        525 |       204 |          304 |     2015 |
++------+--------------+------------+-----------+--------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select title, unit_price from Book where unit_price = (select max(unit_price) from Book);
++-------+------------+
+| title | unit_price |
++-------+------------+
+| Chava |        525 |
++-------+------------+
+1 row in set (0.00 sec)
+
+mysql> select title, unit_price from Book where unit_price BETWEEN 300 and 400;
++--------------+------------+
+| title        | unit_price |
++--------------+------------+
+| Harry potter |        350 |
+| Radhe        |        300 |
+| Hercules     |        375 |
+| Shiva        |        400 |
++--------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select *from Book;
++------+--------------+------------+-----------+--------------+----------+
+| ISBN | title        | unit_price | author_no | publisher_no | pub_year |
++------+--------------+------------+-----------+--------------+----------+
+|  401 | Harry potter |        350 |       201 |          301 |     2000 |
+|  402 | Radhe        |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner  |        210 |       204 |          304 |     2015 |
+|  404 | Hercules     |        375 |       201 |          301 |     2000 |
+|  405 | Shiva        |        400 |       203 |          303 |     2006 |
+|  406 | Chava        |        525 |       204 |          304 |     2015 |
++------+--------------+------------+-----------+--------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> #9.Display all titles of books with price and published year in decreasing order of publishing year. 
+
+mysql> select title,unit_price,pub_year from Book order by pub_year DESC;
++--------------+------------+----------+
+| title        | unit_price | pub_year |
++--------------+------------+----------+
+| Maze Runner  |        210 |     2015 |
+| Chava        |        525 |     2015 |
+| Shiva        |        400 |     2006 |
+| Radhe        |        300 |     2004 |
+| Harry potter |        350 |     2000 |
+| Hercules     |        375 |     2000 |
++--------------+------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> #10.Display title,author_no and publisher_no of all books published in 2000,2004,2006. 
+
+mysql> select title,author_no,publisher_no from Book where pub_year in (2000,2004,2006);
++--------------+-----------+--------------+
+| title        | author_no | publisher_no |
++--------------+-----------+--------------+
+| Harry potter |       201 |          301 |
+| Radhe        |       202 |          302 |
+| Hercules     |       201 |          301 |
+| Shiva        |       203 |          303 |
++--------------+-----------+--------------+
+4 rows in set (0.00 sec)
+
+mysql> #5.Delete customer details living in pune. 
+
+mysql> create table orderT_new(order_no int PRIMARY KEY,cust_no int,ISBN bigint,qty int,odate date,FOREIGN KEY(cust_no) REFERENCES Customer(cust_no) ON DELETE CASCADE,FOREIGN KEY(ISBN) REFERENCES Book(ISBN) ON DELETE CASCADE);
+Query OK, 0 rows affected (0.38 sec)
+
+mysql>  desc orderT_new;
++----------+--------+------+-----+---------+-------+
+| Field    | Type   | Null | Key | Default | Extra |
++----------+--------+------+-----+---------+-------+
+| order_no | int    | NO   | PRI | NULL    |       |
+| cust_no  | int    | YES  | MUL | NULL    |       |
+| ISBN     | bigint | YES  | MUL | NULL    |       |
+| qty      | int    | YES  |     | NULL    |       |
+| odate    | date   | YES  |     | NULL    |       |
++----------+--------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql>  insert into ordert_new values(501,101,401,2,'2020-11-05');
+Query OK, 1 row affected (0.02 sec)
+
+mysql>  insert into ordert_new values(502,102,403,3,'2020-11-06');
+Query OK, 1 row affected (0.02 sec)
+
+mysql>  insert into ordert_new values(503,103,405,1,'2020-10-07');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into ordert_new values(504,104,406,5,'2020-08-05');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select *from ordert_new;
++----------+---------+------+------+------------+
+| order_no | cust_no | ISBN | qty  | odate      |
++----------+---------+------+------+------------+
+|      501 |     101 |  401 |    2 | 2020-11-05 |
+|      502 |     102 |  403 |    3 | 2020-11-06 |
+|      503 |     103 |  405 |    1 | 2020-10-07 |
+|      504 |     104 |  406 |    5 | 2020-08-05 |
++----------+---------+------+------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select *from Customer;
++---------+------------+------------+--------------+------------------+---------+-------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr        | city    | cust_phone  |
++---------+------------+------------+--------------+------------------+---------+-------------+
+|     101 | Saili      | Sharma     | abc          | Dhankawdi        | Pune    |  9209182735 |
+|     102 | Praveen    | Thorat     | abc          | Kothrude         | Pune    |  9378471029 |
+|     103 | Rohit      | Sharma     | bcd          | Dadar            | Mumbai  |  9201777281 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar     | Mumbai  |  9834728902 |
+|     105 | Rahul      | Raj        | bcd          | Avadi            | Chennai |  5362789102 |
+|     106 | Purva      | Kulkarni   | afk          | Dadar            | Mumbai  |  9022188739 |
+|     107 | Shailesh   | Thorat     | hks          | Balewadi         | Pune    | 95536777281 |
+|     108 | Harish     | Rahane     | kja          | Mira road        | Delhi   |  9355672892 |
+|     109 | Harsh      | Pandey     | jsj          | Kalyan           | Mumbai  |  9553672892 |
+|     110 | Raj        | Mohan      | jsj          | Tiruvanantapuram | Kerala  |  9663778273 |
++---------+------------+------------+--------------+------------------+---------+-------------+
+10 rows in set (0.01 sec)
+
+mysql> Drop table ordert;
+Query OK, 0 rows affected (0.20 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| book               |
+| customer           |
+| ordert_new         |
+| publisher          |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> delete from Customer where city = 'Pune';
+Query OK, 3 rows affected (0.03 sec)
+
+mysql> select *from Customer;
++---------+------------+------------+--------------+------------------+---------+------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr        | city    | cust_phone |
++---------+------------+------------+--------------+------------------+---------+------------+
+|     103 | Rohit      | Sharma     | bcd          | Dadar            | Mumbai  | 9201777281 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar     | Mumbai  | 9834728902 |
+|     105 | Rahul      | Raj        | bcd          | Avadi            | Chennai | 5362789102 |
+|     106 | Purva      | Kulkarni   | afk          | Dadar            | Mumbai  | 9022188739 |
+|     108 | Harish     | Rahane     | kja          | Mira road        | Delhi   | 9355672892 |
+|     109 | Harsh      | Pandey     | jsj          | Kalyan           | Mumbai  | 9553672892 |
+|     110 | Raj        | Mohan      | jsj          | Tiruvanantapuram | Kerala  | 9663778273 |
++---------+------------+------------+--------------+------------------+---------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select *from ordert_new;
++----------+---------+------+------+------------+
+| order_no | cust_no | ISBN | qty  | odate      |
++----------+---------+------+------+------------+
+|      503 |     103 |  405 |    1 | 2020-10-07 |
+|      504 |     104 |  406 |    5 | 2020-08-05 |
++----------+---------+------+------+------------+
+2 rows in set (0.00 sec)
