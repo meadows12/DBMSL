@@ -1,0 +1,306 @@
+mysql> use te_31239;
+Database changed
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| book               |
+| book_name          |
+| customer           |
+| customerview1      |
+| ordert_new         |
+| publisher          |
+| view1              |
++--------------------+
+8 rows in set (0.02 sec)
+
+mysql> select * from customer;
++---------+------------+------------+--------------+------------------+---------+------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr        | city    | cust_phone |
++---------+------------+------------+--------------+------------------+---------+------------+
+|     103 | Rohit      | Sharma     | bcd          | Dadar            | Mumbai  | 9201777281 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar     | Mumbai  | 9834728902 |
+|     105 | Rahul      | Raj        | bcd          | Avadi            | Chennai | 5362789102 |
+|     106 | Purva      | Kulkarni   | afk          | Dadar            | Mumbai  | 9022188739 |
+|     108 | Harish     | Rahane     | kja          | Mira road        | Delhi   | 9355672892 |
+|     109 | Harsh      | Pandey     | jsj          | Kalyan           | Mumbai  | 9553672892 |
+|     110 | Raj        | Mohan      | jsj          | Tiruvanantapuram | Kerala  | 9663778273 |
++---------+------------+------------+--------------+------------------+---------+------------+
+7 rows in set (0.00 sec)
+
+mysql> select * from customer NATURAL JOIN ordert_new;
++---------+------------+------------+--------------+--------------+--------+------------+----------+------+------+------------+
+| cust_no | cust_fname | cust_lname | cust_company | cust_addr    | city   | cust_phone | order_no | ISBN | qty  | odate      |
++---------+------------+------------+--------------+--------------+--------+------------+----------+------+------+------------+
+|     103 | Rohit      | Sharma     | bcd          | Dadar        | Mumbai | 9201777281 |      503 |  405 |    1 | 2020-10-07 |
+|     104 | Virat      | Kohli      | afk          | Shivajinagar | Mumbai | 9834728902 |      504 |  406 |    5 | 2020-08-05 |
++---------+------------+------------+--------------+--------------+--------+------------+----------+------+------+------------+
+2 rows in set (0.01 sec)
+
+mysql> select * from author;
++-----------+---------------------+----------------+
+| author_no | author_name         | country        |
++-----------+---------------------+----------------+
+|       201 | Chetan              | India          |
+|       202 | Dan Brown           | United States  |
+|       203 | Willian Shakespeare | United Kingdom |
+|       204 | Sarah Williams      | United Kingdom |
++-----------+---------------------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> select * book;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'book' at line 1
+mysql> select * from book;
++------+--------------+------------+-----------+--------------+----------+
+| ISBN | title        | unit_price | author_no | publisher_no | pub_year |
++------+--------------+------------+-----------+--------------+----------+
+|  401 | Harry potter |        350 |       201 |          301 |     2000 |
+|  402 | Radhe        |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner  |        210 |       204 |          304 |     2015 |
+|  404 | Hercules     |        375 |       201 |          301 |     2000 |
+|  405 | Shiva        |        400 |       203 |          303 |     2006 |
+|  406 | Chava        |        525 |       204 |          304 |     2015 |
++------+--------------+------------+-----------+--------------+----------+
+6 rows in set (0.00 sec)
+
+mysql> # 2.Find the book_ title, author_name, country.
+mysql> select b.title,a.author_name,a.country from author a INNER JOIN book b on a.author_name = b.author_name;
+ERROR 1054 (42S22): Unknown column 'b.author_name' in 'on clause'
+mysql> select b.title,a.author_name,a.country from author a INNER JOIN book b on a.author_no = b.author_no;
++--------------+---------------------+----------------+
+| title        | author_name         | country        |
++--------------+---------------------+----------------+
+| Harry potter | Chetan              | India          |
+| Hercules     | Chetan              | India          |
+| Radhe        | Dan Brown           | United States  |
+| Shiva        | Willian Shakespeare | United Kingdom |
+| Maze Runner  | Sarah Williams      | United Kingdom |
+| Chava        | Sarah Williams      | United Kingdom |
++--------------+---------------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> #3.Find the customer ID, name and order_no of customers who have never placed an order.
+mysql> select * from ordert_new;
++----------+---------+------+------+------------+
+| order_no | cust_no | ISBN | qty  | odate      |
++----------+---------+------+------+------------+
+|      503 |     103 |  405 |    1 | 2020-10-07 |
+|      504 |     104 |  406 |    5 | 2020-08-05 |
++----------+---------+------+------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select c.cust_no,c.cust_fname,o.order_no from custormer c LEFT JOIN order o on c.cust_no = o.cust_no where o.cust_no IS NULL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'order o on c.cust_no = o.cust_no where o.cust_no IS NULL' at line 1
+mysql> desc ordert_new;
++----------+--------+------+-----+---------+-------+
+| Field    | Type   | Null | Key | Default | Extra |
++----------+--------+------+-----+---------+-------+
+| order_no | int    | NO   | PRI | NULL    |       |
+| cust_no  | int    | YES  | MUL | NULL    |       |
+| ISBN     | bigint | YES  | MUL | NULL    |       |
+| qty      | int    | YES  |     | NULL    |       |
+| odate    | date   | YES  |     | NULL    |       |
++----------+--------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql> select c.cust_no,c.cust_fname,o.order_no from custormer c LEFT JOIN ordert_new o on c.cust_no = o.cust_no where o.cust_no IS NULL;
+ERROR 1146 (42S02): Table 'te_31239.custormer' doesn't exist
+mysql> select c.cust_no,c.cust_fname,o.order_no from customer c LEFT JOIN ordert_new o on c.cust_no = o.cust_no where o.cust_no IS NULL;
++---------+------------+----------+
+| cust_no | cust_fname | order_no |
++---------+------------+----------+
+|     105 | Rahul      |     NULL |
+|     106 | Purva      |     NULL |
+|     108 | Harish     |     NULL |
+|     109 | Harsh      |     NULL |
+|     110 | Raj        |     NULL |
++---------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> #4.Find the Title, ISBN, order_no of the books for which order is not placed
+mysql> select b.title,b.ISBN,o.order_no from ordert_new o RIGHT JOIN book b on o.ISBN = b.ISBN where o.order_no IS NULL;
++--------------+------+----------+
+| title        | ISBN | order_no |
++--------------+------+----------+
+| Harry potter |  401 |     NULL |
+| Radhe        |  402 |     NULL |
+| Maze Runner  |  403 |     NULL |
+| Hercules     |  404 |     NULL |
++--------------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> #5.Display cust_fname, title,author_no,publisher_year where ISBN=1234.
+mysql> select * from publisher;
++--------------+----------------+--------------------------+------+
+| publisher_no | publisher_name | publisher_addr           | year |
++--------------+----------------+--------------------------+------+
+|          301 | Penguin        | United States of America | 2016 |
+|          302 | Continental    | Pune                     | 2015 |
+|          303 | Goosebumps     | United States of America | 2016 |
+|          304 | Mcmilan        | England                  | 2014 |
++--------------+----------------+--------------------------+------+
+4 rows in set (0.02 sec)
+
+mysql> select c.cust_fname,b.title,b.author_no,b.pub_year
+    -> from ((customer c INNER JOIN ordert_new o on c.cust_no = o.cust_no)INNER JOIN book b on o.ISBN = b.ISBN)
+    -> where b.ISBN = 1234;
++------------+---------------+-----------+----------+
+| cust_fname | title         | author_no | pub_year |
++------------+---------------+-----------+----------+
+| Rahul      | Da vinci code |       202 |     2003 |
++------------+---------------+-----------+----------+
+1 row in set (0.00 sec)
+
+mysql> #6. Display the total number of books and customer name.
+mysql> select count(b.title) as No_of_books,c.cust_fname,c.cust_lname
+    -> from((customer c INNER JOIN ordert_new o on c.cust_no = o.cust_no)INNER JOIN book b on o.ISBN = b.ISBN);
++-------------+------------+------------+
+| No_of_books | cust_fname | cust_lname |
++-------------+------------+------------+
+|           3 | Rohit      | Sharma     |
++-------------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select count(b.title) as No_of_books,c.cust_fname,c.cust_lname
+    -> from((customer c INNER JOIN ordert_new o on c.cust_no = o.cust_no)INNER JOIN book b on o.ISBN = b.ISBN)
+    -> GROUP BY c.cust_fname;
++-------------+------------+------------+
+| No_of_books | cust_fname | cust_lname |
++-------------+------------+------------+
+|           1 | Rohit      | Sharma     |
+|           1 | Virat      | Kohli      |
+|           1 | Rahul      | Raj        |
++-------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> #7.List the cust_id, order_no and ISBN with books having title 'mysql'.
+mysql> select * from book;
++------+---------------+------------+-----------+--------------+----------+
+| ISBN | title         | unit_price | author_no | publisher_no | pub_year |
++------+---------------+------------+-----------+--------------+----------+
+|  401 | Harry potter  |        350 |       201 |          301 |     2000 |
+|  402 | Radhe         |        300 |       202 |          302 |     2004 |
+|  403 | Maze Runner   |        210 |       204 |          304 |     2015 |
+|  404 | Hercules      |        375 |       201 |          301 |     2000 |
+|  405 | Shiva         |        400 |       203 |          303 |     2006 |
+|  406 | Chava         |        525 |       204 |          304 |     2015 |
+|  407 | mysql         |        320 |       202 |          303 |     2006 |
+| 1234 | Da vinci code |        350 |       202 |          302 |     2003 |
++------+---------------+------------+-----------+--------------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select cust_no,order_no,ISBN from ordert_new
+    -> where ISBN in
+    -> (select ISBN from book where title = 'mysql');
++---------+----------+------+
+| cust_no | order_no | ISBN |
++---------+----------+------+
+|     106 |      502 |  407 |
++---------+----------+------+
+1 row in set (0.00 sec)
+
+mysql> #8.Find the names of all the companies that ordered books in the year 2015.
+
+mysql> select cust_company from customer
+    -> where cust_no in
+    -> (select cust_no from ordert_new where odate BETWEEN '2015-01-01' AND '2015-12-31');
++--------------+
+| cust_company |
++--------------+
+| afk          |
+| kja          |
++--------------+
+2 rows in set (0.00 sec)
+
+mysql> #9.Create view showing the author and book details.
+
+mysql> create or replace view bookview as select b.title,a.author_name from book b INNER JOIN author a on b.author_no = a.author_no;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from bookview;
++---------------+---------------------+
+| title         | author_name         |
++---------------+---------------------+
+| Harry potter  | Chetan              |
+| Hercules      | Chetan              |
+| Radhe         | Dan Brown           |
+| mysql         | Dan Brown           |
+| Da vinci code | Dan Brown           |
+| Shiva         | Willian Shakespeare |
+| Maze Runner   | Sarah Williams      |
+| Chava         | Sarah Williams      |
++---------------+---------------------+
+8 rows in set (0.00 sec)
+
+mysql> # 10.Perform Manipulation on  simple view-Insert, update, delete, drop view.
+mysql> create view sview as select cust_no from customer;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select * from sview;
++---------+
+| cust_no |
++---------+
+|     103 |
+|     104 |
+|     105 |
+|     106 |
+|     108 |
+|     109 |
+|     110 |
++---------+
+7 rows in set (0.01 sec)
+
+mysql> insert into sview(cust_no) values(111);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from sview;
++---------+
+| cust_no |
++---------+
+|     103 |
+|     104 |
+|     105 |
+|     106 |
+|     108 |
+|     109 |
+|     110 |
+|     111 |
++---------+
+8 rows in set (0.00 sec)
+
+mysql> Delete from sview where cust_no = 103;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from sview;
++---------+
+| cust_no |
++---------+
+|     104 |
+|     105 |
+|     106 |
+|     108 |
+|     109 |
+|     110 |
+|     111 |
++---------+
+7 rows in set (0.00 sec)
+
+mysql> drop view sview;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++--------------------+
+| Tables_in_te_31239 |
++--------------------+
+| author             |
+| book               |
+| book_name          |
+| bookview           |
+| customer           |
+| customerview1      |
+| ordert_new         |
+| publisher          |
+| view1              |
++--------------------+
+9 rows in set (0.01 sec)
