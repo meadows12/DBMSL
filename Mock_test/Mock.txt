@@ -1,0 +1,280 @@
+mysql> create database mock;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> use mock;
+Database changed
+mysql> create table emp(emp_id int PRIMARY KEY,city varchar(20),emp_name varchar(20));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> insert into emp values(1,"Pune","Jones");
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into emp values(2,"Mumbai","Joey");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp values(3,"Mumbai","Smith");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(4,"Pune","Ford");
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp values(5,"Pune","Samson");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp values(10,"Pune","Samson");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> create table emp_detail(emp_id int PRIMARY KEY,emp_name varchar(20),deptname varchar(20),sal bigint(10),hiredate date,dept_no int);
+Query OK, 0 rows affected, 1 warning (0.16 sec)
+
+mysql> insert into emp_detail values(1,"Jones","IT",70000,"2018-01-01",3);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp_detail values(2,"Joey","Sales",90000,"2018-02-01",1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> drop table emp_sal;
+Query OK, 0 rows affected (0.18 sec)
+
+mysql> create table emp_sal(dept_no int PRIMARY KEY,deptname varchar(20),emp_name varchar(20),sal bigint(10));
+Query OK, 0 rows affected, 1 warning (0.13 sec)
+
+mysql> insert into emp_sal values(1,"Sales","Joey",90000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_sal values(2,"Manager","Smith",80000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp_sal values(3,"IT","Jones",70000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++--------+--------+----------+
+| emp_id | city   | emp_name |
++--------+--------+----------+
+|      1 | Pune   | Jones    |
+|      2 | Mumbai | Joey     |
+|      3 | Mumbai | Smith    |
+|      4 | Pune   | Ford     |
+|      5 | Pune   | Samson   |
+|     10 | Pune   | Samson   |
++--------+--------+----------+
+6 rows in set (0.01 sec)
+
+mysql> select * from emp_sal;
++---------+----------+----------+-------+
+| dept_no | deptname | emp_name | sal   |
++---------+----------+----------+-------+
+|       1 | Sales    | Joey     | 90000 |
+|       2 | Manager  | Smith    | 80000 |
+|       3 | IT       | Jones    | 70000 |
++---------+----------+----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp_detail;
++--------+----------+----------+-------+------------+---------+
+| emp_id | emp_name | deptname | sal   | hiredate   | dept_no |
++--------+----------+----------+-------+------------+---------+
+|      1 | Jones    | IT       | 70000 | 2018-01-01 |       3 |
+|      2 | Joey     | Sales    | 90000 | 2018-02-01 |       1 |
++--------+----------+----------+-------+------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into emp_detail values(3,"Smith","Manager",80000,"2020-03-01",2);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into emp_sal values(4,"HR","Ford",95000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp_detail values(4,"Ford","HR",95000,"2020-01-01",4);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp_sal values(10,"Sales","Samson",85000);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into emp_detail values(10,"Samson","Sales",85000,"2019-01-01",5);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from emp_sal where dept_id=10;
+ERROR 1054 (42S22): Unknown column 'dept_id' in 'where clause'
+mysql> delete from emp_sal where dept_no=10;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_sal values(5,"Sales","Samson",85000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from emp where emp_id=5;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++--------+--------+----------+
+| emp_id | city   | emp_name |
++--------+--------+----------+
+|      1 | Pune   | Jones    |
+|      2 | Mumbai | Joey     |
+|      3 | Mumbai | Smith    |
+|      4 | Pune   | Ford     |
+|     10 | Pune   | Samson   |
++--------+--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp_sal;
++---------+----------+----------+-------+
+| dept_no | deptname | emp_name | sal   |
++---------+----------+----------+-------+
+|       1 | Sales    | Joey     | 90000 |
+|       2 | Manager  | Smith    | 80000 |
+|       3 | IT       | Jones    | 70000 |
+|       4 | HR       | Ford     | 95000 |
+|       5 | Sales    | Samson   | 85000 |
++---------+----------+----------+-------+
+5 rows in set (0.00 sec)
+
+mysql> select * from emp_detail;
++--------+----------+----------+-------+------------+---------+
+| emp_id | emp_name | deptname | sal   | hiredate   | dept_no |
++--------+----------+----------+-------+------------+---------+
+|      1 | Jones    | IT       | 70000 | 2018-01-01 |       3 |
+|      2 | Joey     | Sales    | 90000 | 2018-02-01 |       1 |
+|      3 | Smith    | Manager  | 80000 | 2020-03-01 |       2 |
+|      4 | Ford     | HR       | 95000 | 2020-01-01 |       4 |
+|     10 | Samson   | Sales    | 85000 | 2019-01-01 |       5 |
++--------+----------+----------+-------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> #1.List the employee details along with Deptname and salary ,city using left outer join & right outer   join and inner Join. In Emp and Emp_salary relation.
+mysql>
+mysql> select e.emp_name,s.sal,e.city,s.deptname from emp e LEFT OUTER JOIN emp_sal s on e.emp_name = s.emp_name;
++----------+-------+--------+----------+
+| emp_name | sal   | city   | deptname |
++----------+-------+--------+----------+
+| Jones    | 70000 | Pune   | IT       |
+| Joey     | 90000 | Mumbai | Sales    |
+| Smith    | 80000 | Mumbai | Manager  |
+| Ford     | 95000 | Pune   | HR       |
+| Samson   | 85000 | Pune   | Sales    |
++----------+-------+--------+----------+
+5 rows in set (0.01 sec)
+
+mysql> select e.emp_name,s.sal,e.city,s.deptname from emp e RIGHT OUTER JOIN emp_sal s on e.emp_name = s.emp_name;
++----------+-------+--------+----------+
+| emp_name | sal   | city   | deptname |
++----------+-------+--------+----------+
+| Joey     | 90000 | Mumbai | Sales    |
+| Smith    | 80000 | Mumbai | Manager  |
+| Jones    | 70000 | Pune   | IT       |
+| Ford     | 95000 | Pune   | HR       |
+| Samson   | 85000 | Pune   | Sales    |
++----------+-------+--------+----------+
+5 rows in set (0.00 sec)
+
+mysql> select e.emp_name,s.sal,s.deptname from emp e INNER JOIN emp_sal s on e.emp_name = s.emp_name;
++----------+-------+----------+
+| emp_name | sal   | deptname |
++----------+-------+----------+
+| Joey     | 90000 | Sales    |
+| Smith    | 80000 | Manager  |
+| Jones    | 70000 | IT       |
+| Ford     | 95000 | HR       |
+| Samson   | 85000 | Sales    |
++----------+-------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into emp values(5,"Banglore","Sam");
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_detail values(5,"Sam","Manager",80000,"2019-01-01",2);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> #2.Create view  EMP_SALARY1 on Emp_salary table  containing Emp_name,Deptname.
+mysql>  create view EMP_SALARY1 as select emp_name,deptname from emp_sal;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from EMP_SALARY1;
++----------+----------+
+| emp_name | deptname |
++----------+----------+
+| Joey     | Sales    |
+| Smith    | Manager  |
+| Jones    | IT       |
+| Ford     | HR       |
+| Samson   | Sales    |
++----------+----------+
+5 rows in set (0.00 sec)
+
+mysql> #3.Display records of employess working  in smith's dept using EMP_Details relation.
+mysql> select * from emp_detail where deptname = (select deptname from emp_sal where emp_name="Smith");
++--------+----------+----------+-------+------------+---------+
+| emp_id | emp_name | deptname | sal   | hiredate   | dept_no |
++--------+----------+----------+-------+------------+---------+
+|      3 | Smith    | Manager  | 80000 | 2020-03-01 |       2 |
+|      5 | Sam      | Manager  | 80000 | 2019-01-01 |       2 |
++--------+----------+----------+-------+------------+---------+
+2 rows in set (0.01 sec)
+
+mysql> #4.Disply salary of employee whose salary is more than salary of FORD using EMP_Details relation
+mysql> select * from emp_detail where sal > (select sal from emp_detail where emp_name="Ford");
+Empty set (0.00 sec)
+
+mysql> insert into emp_detail values(6,"Chandler","Sales",100000,"2019-02-01",1);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from emp_detail where sal > (select sal from emp_detail where emp_name="Ford");
++--------+----------+----------+--------+------------+---------+
+| emp_id | emp_name | deptname | sal    | hiredate   | dept_no |
++--------+----------+----------+--------+------------+---------+
+|      6 | Chandler | Sales    | 100000 | 2019-02-01 |       1 |
++--------+----------+----------+--------+------------+---------+
+1 row in set (0.00 sec)
+
+mysql> #5.Display records of employee who are senior to JONES using Emp_Details relation.
+mysql> select * from emp_detail where hiredate > (select hiredate from emp_detail where emp_name="Jones");
++--------+----------+----------+--------+------------+---------+
+| emp_id | emp_name | deptname | sal    | hiredate   | dept_no |
++--------+----------+----------+--------+------------+---------+
+|      2 | Joey     | Sales    |  90000 | 2018-02-01 |       1 |
+|      3 | Smith    | Manager  |  80000 | 2020-03-01 |       2 |
+|      4 | Ford     | HR       |  95000 | 2020-01-01 |       4 |
+|      5 | Sam      | Manager  |  80000 | 2019-01-01 |       2 |
+|      6 | Chandler | Sales    | 100000 | 2019-02-01 |       1 |
+|     10 | Samson   | Sales    |  85000 | 2019-01-01 |       5 |
++--------+----------+----------+--------+------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> #6.Create view  Emp_View on Emp relation contaianing Emp_name and City.
+mysql> create view Emp_view as select * from emp;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> select * from Emp_view;
++--------+----------+----------+
+| emp_id | city     | emp_name |
++--------+----------+----------+
+|      1 | Pune     | Jones    |
+|      2 | Mumbai   | Joey     |
+|      3 | Mumbai   | Smith    |
+|      4 | Pune     | Ford     |
+|      5 | Banglore | Sam      |
+|     10 | Pune     | Samson   |
++--------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql>#7.Update city in Emp_View whose EmpId id 10. 
+mysql> update Emp_view set city="Banglore" where emp_id=10;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>#8.Display view Emp_View. 
+mysql> select * from Emp_view;
++--------+----------+----------+
+| emp_id | city     | emp_name |
++--------+----------+----------+
+|      1 | Pune     | Jones    |
+|      2 | Mumbai   | Joey     |
+|      3 | Mumbai   | Smith    |
+|      4 | Pune     | Ford     |
+|      5 | Banglore | Sam      |
+|     10 | Banglore | Samson   |
++--------+----------+----------+
+6 rows in set (0.00 sec)
+
+mysql>
