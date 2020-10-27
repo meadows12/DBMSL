@@ -1,0 +1,1787 @@
+> use assignb2;
+switched to db assignb2
+> db;
+assignb2
+
+# 1.Create Collection
+> db.createCollection('customers')
+{ "ok" : 1 }
+
+#2.Inserting values
+> db.customers.insert({name:"Sam",phone:9853672635,address:"Pune,Maharashtra",storelocation:"Karve road",shophist:{amt:400,date:new Date("2020-08-09")},items:[{item:"Pen",qty:4,price:8},{item:"Pencil",qty:3,price:3}]})
+WriteResult({ "nInserted" : 1 })
+> db.customers.find().pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 400,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+> db.customers.insertMany([{name:"Bob",phone:0926735628,address:"Pune,Maharashtra",storelocation:"Karve road",shophist:{amt:50,date:new Date("2020-10-09")},items:[{item:"Bagpack",qty:1,price:200},{item:"Biscuit",qty:3,price:80}]},{name:"Smith",phone:9563762563,address:"Mumbai,Maharashtra",storelocation:"Mira road",shophist:{amt:100,date:new Date("2020-10-04")},items:[{item:"Pen",qty:10,price:30},{item:"Earphone",qty:1,price:400},{item:"Pencil",qty:2,price:5}]}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("5f8d7c71ba524be3e479fd01"),
+                ObjectId("5f8d7c71ba524be3e479fd02")
+        ]
+}
+> db.customers.insert({name:"Shyla",phone:7356473827,address:"Mumbai,Maharashtra",storelocation:"Mira road",shophist:{amt:300,date:new Date("2020-07-09")},items:[{item:"Earphone",qty:2,price:400},{item:"Charger",qty:1,price:100}]})
+WriteResult({ "nInserted" : 1 })
+
+> db.customers.insert({name:"Jones",phone:9086354783,address:"Pune,Maharashtra",storelocation:"Kothrude",shophist:{amt:100,date:new Date("2020-09-06")},items:[{item:"Pen",qty:7,price:7},{item:"Scale",qty:2,price:10}]})
+WriteResult({ "nInserted" : 1 })
+
+> db.customers.insert({name:"Ron",phone:9243562677,address:"Banglore",storelocation:"ABC road",shophist:{amt:350,date:new Date("2020-09-20")},items:[{item:"Snacks",qty:2,price:20}]})
+WriteResult({ "nInserted" : 1 })
+
+> db.customers.insertMany([{name:"Joey",phone:9253677289,address:"Mumbai,Maharashtra",storelocation:"Mira road",shophist:{amt:700,date:new Date("2020-08-20")},items:[{item:"Snacks",qty:4,price:40},{item:"Pen",qty:10,price:20}]},{name:"Mrunal",phone:6473864783,address:"Pune,Maharashtra",storelocation:"Karve road",shophist:{amt:250,date:new Date("2020-10-09")},items:[{item:"Charger",qty:2,price:100}]}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("5f93f01a5fab5b571720abe0"),
+                ObjectId("5f93f01a5fab5b571720abe1")
+        ]
+}
+> db.customers.find().pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed8e5fab5b571720abdf"),
+        "name" : "Ron",
+        "phone" : 9243562677,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 350,
+                "date" : ISODate("2020-09-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 250,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+> db.customers.insert({name:"Rachel",phone:9364782736,address:"Banglore",storelocation:"ABC road",shophist:{amt:355,date:new Date("2020-09-19")},items:[{item:"Snacks",qty:2,price:20},{item:"Shampoo",qty:2,price:200}]})
+WriteResult({ "nInserted" : 1 })
+> db.customers.insert({name:"Rohit",phone:8109283782,address:"Pune",storelocation:"Kothrude",shophist:{amt:150,date:new Date("2020-08-19")},items:[{item:"Pencil",qty:5,price:5},{item:"Shampoo",qty:2,price:200}]})
+WriteResult({ "nInserted" : 1 })
+> db.customers.find().pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed8e5fab5b571720abdf"),
+        "name" : "Ron",
+        "phone" : 9243562677,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 350,
+                "date" : ISODate("2020-09-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 250,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f0c15fab5b571720abe2"),
+        "name" : "Rachel",
+        "phone" : 9364782736,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 355,
+                "date" : ISODate("2020-09-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+# 3.Find document where storelocation is Mira road
+> db.customers.find({storelocation:"Mira road"}).pretty()
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+#4. Find document where shophistory amount is greater than 200.
+> db.customers.find({"shophist.amt":{$gt:200}}).pretty()
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed8e5fab5b571720abdf"),
+        "name" : "Ron",
+        "phone" : 9243562677,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 350,
+                "date" : ISODate("2020-09-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 250,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f0c15fab5b571720abe2"),
+        "name" : "Rachel",
+        "phone" : 9364782736,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 355,
+                "date" : ISODate("2020-09-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+
+#5.Find docuement where storelocation is Mira road and shophistory amount is greater than equal to 300.
+> db.customers.find({$and:[{"storelocation":"Mira road"},{"shophist.amt":{$gte:300}}]}).pretty()
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+>
+#6. Find where storelocation is Karve road or shophistory amount is less than equal to 200
+> db.customers.find({$or:[{"storelocation":"Karve road"},{"shophist.amt":{$lte:200}}]}).pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 250,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+
+#7.Update shophistory amount to 60 where name = "Bob".
+> db.customers.update({name:"Bob"},{$set:{"shophist.amt":60}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customers.find().pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 60,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed8e5fab5b571720abdf"),
+        "name" : "Ron",
+        "phone" : 9243562677,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 350,
+                "date" : ISODate("2020-09-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 250,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f0c15fab5b571720abe2"),
+        "name" : "Rachel",
+        "phone" : 9364782736,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 355,
+                "date" : ISODate("2020-09-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+
+#8.Update shophistory to 200 where storelocation is Karve road.
+> db.customers.update({storelocation:"Karve road"},{$set:{"shophist.amt":200}},{multi:true})
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 2 })
+> db.customers.find({storelocation:"Karve road"}).pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+ #9. Update phone and address where name is Johny 
+> db.customers.update({name:"Johny"},{$set:{phone:1234567890,address:"Banglore"}},{upsert:true})
+WriteResult({
+        "nMatched" : 0,
+        "nUpserted" : 1,
+        "nModified" : 0,
+        "_id" : ObjectId("5f93f40cb3ec804f3e7eb697")
+})
+> db.customers.find().pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed8e5fab5b571720abdf"),
+        "name" : "Ron",
+        "phone" : 9243562677,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 350,
+                "date" : ISODate("2020-09-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f0c15fab5b571720abe2"),
+        "name" : "Rachel",
+        "phone" : 9364782736,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 355,
+                "date" : ISODate("2020-09-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f40cb3ec804f3e7eb697"),
+        "name" : "Johny",
+        "address" : "Banglore",
+        "phone" : 1234567890
+}
+
+#10. Save query
+> db.customers.save({"_id":ObjectId("5f93f40cb3ec804f3e7eb697"),name:"Mrunal",address:"Mumbai,Maharashtra",phone:0987654321})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customers.find().pretty()
+{
+        "_id" : ObjectId("5f8d78ffba524be3e479fd00"),
+        "name" : "Sam",
+        "phone" : 9853672635,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-08-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 4,
+                        "price" : 8
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 3,
+                        "price" : 3
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd01"),
+        "name" : "Bob",
+        "phone" : 926735628,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Bagpack",
+                        "qty" : 1,
+                        "price" : 200
+                },
+                {
+                        "item" : "Biscuit",
+                        "qty" : 3,
+                        "price" : 80
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93ed8e5fab5b571720abdf"),
+        "name" : "Ron",
+        "phone" : 9243562677,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 350,
+                "date" : ISODate("2020-09-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 9253677289,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe1"),
+        "name" : "Mrunal",
+        "phone" : 6473864783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Karve road",
+        "shophist" : {
+                "amt" : 200,
+                "date" : ISODate("2020-10-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Charger",
+                        "qty" : 2,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f0c15fab5b571720abe2"),
+        "name" : "Rachel",
+        "phone" : 9364782736,
+        "address" : "Banglore",
+        "storelocation" : "ABC road",
+        "shophist" : {
+                "amt" : 355,
+                "date" : ISODate("2020-09-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 2,
+                        "price" : 20
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f40cb3ec804f3e7eb697"),
+        "name" : "Mrunal",
+        "address" : "Mumbai,Maharashtra",
+        "phone" : 987654321
+}
+
+#11.Update phone to 1234567890 where storeloaction is Mira road.
+> db.customers.update({storelocation:"Mira road"},{$set:{"phone":1234567890}},{upsert:true,multi:true})
+WriteResult({ "nMatched" : 3, "nUpserted" : 0, "nModified" : 1 })
+> db.customers.find({storelocation:"Mira road"}).pretty()
+{
+        "_id" : ObjectId("5f8d7c71ba524be3e479fd02"),
+        "name" : "Smith",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-10-04T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 30
+                },
+                {
+                        "item" : "Earphone",
+                        "qty" : 1,
+                        "price" : 400
+                },
+                {
+                        "item" : "Pencil",
+                        "qty" : 2,
+                        "price" : 5
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f8d8173ba524be3e479fd03"),
+        "name" : "Shyla",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 300,
+                "date" : ISODate("2020-07-09T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Earphone",
+                        "qty" : 2,
+                        "price" : 400
+                },
+                {
+                        "item" : "Charger",
+                        "qty" : 1,
+                        "price" : 100
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f01a5fab5b571720abe0"),
+        "name" : "Joey",
+        "phone" : 1234567890,
+        "address" : "Mumbai,Maharashtra",
+        "storelocation" : "Mira road",
+        "shophist" : {
+                "amt" : 700,
+                "date" : ISODate("2020-08-20T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Snacks",
+                        "qty" : 4,
+                        "price" : 40
+                },
+                {
+                        "item" : "Pen",
+                        "qty" : 10,
+                        "price" : 20
+                }
+        ]
+}
+
+> db.customers.remove({"name":"Mrunal"})
+WriteResult({ "nRemoved" : 2 })
+> db.customers.find({name:1})
+> db.customers.find({},{name:1}).pretty()
+{ "_id" : ObjectId("5f8d78ffba524be3e479fd00"), "name" : "Sam" }
+{ "_id" : ObjectId("5f8d7c71ba524be3e479fd01"), "name" : "Bob" }
+{ "_id" : ObjectId("5f8d7c71ba524be3e479fd02"), "name" : "Smith" }
+{ "_id" : ObjectId("5f8d8173ba524be3e479fd03"), "name" : "Shyla" }
+{ "_id" : ObjectId("5f93ed235fab5b571720abde"), "name" : "Jones" }
+{ "_id" : ObjectId("5f93ed8e5fab5b571720abdf"), "name" : "Ron" }
+{ "_id" : ObjectId("5f93f01a5fab5b571720abe0"), "name" : "Joey" }
+{ "_id" : ObjectId("5f93f0c15fab5b571720abe2"), "name" : "Rachel" }
+{ "_id" : ObjectId("5f93f1125fab5b571720abe3"), "name" : "Rohit" }
+
+> db.customers.find({storelocation:"Kothrude"}).pretty()
+{
+        "_id" : ObjectId("5f93ed235fab5b571720abde"),
+        "name" : "Jones",
+        "phone" : 9086354783,
+        "address" : "Pune,Maharashtra",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 100,
+                "date" : ISODate("2020-09-06T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pen",
+                        "qty" : 7,
+                        "price" : 7
+                },
+                {
+                        "item" : "Scale",
+                        "qty" : 2,
+                        "price" : 10
+                }
+        ]
+}
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+> db.customers.deleteOne({storelocation:"Kothrude"})
+{ "acknowledged" : true, "deletedCount" : 1 }
+> db.customers.find({storelocation:"Kothrude"}).pretty()
+{
+        "_id" : ObjectId("5f93f1125fab5b571720abe3"),
+        "name" : "Rohit",
+        "phone" : 8109283782,
+        "address" : "Pune",
+        "storelocation" : "Kothrude",
+        "shophist" : {
+                "amt" : 150,
+                "date" : ISODate("2020-08-19T00:00:00Z")
+        },
+        "items" : [
+                {
+                        "item" : "Pencil",
+                        "qty" : 5,
+                        "price" : 5
+                },
+                {
+                        "item" : "Shampoo",
+                        "qty" : 2,
+                        "price" : 200
+                }
+        ]
+}
+>
