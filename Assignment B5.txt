@@ -1,0 +1,35 @@
+> db.customers.update({"_id": ObjectId("5fa03914f5a577eee5c6de0c")},{$set:{itemlist:["Chips","Oil can"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customers.update({"_id": ObjectId("5fa03914f5a577eee5c6de0d")},{$set:{itemlist:["Pencil","Earphone"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customers.update({"_id":ObjectId("5fa03914f5a577eee5c6de0e")},{$set:{itemlist:["Charger"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+>  db.customers.update({"_id": ObjectId("5fa039b6f5a577eee5c6de0f")},{$set:{itemlist:["Chips","Oil can"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+> db.customers.update({"_id": ObjectId("5fa039b6f5a577eee5c6de10")},{$set:{itemlist:["Pen","Earphone"]}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
+
+//$all operator
+// Display docuemnts where items are Pen and Pencil
+> db.customers.find({itemlist:{$all:["Pen","Pencil"]}},{name:1,itemlist:1})
+
+$size opeartor
+//Display itemlist with size 1
+> db.customers.find({itemlist:{$size:1}},{name:1,itemlist:1})
+
+//$push and each
+//Add Biscuit and Milk to document where name is Mrunal (Adding Multiple items in array)
+> db.customers.update({name:"Mrunal"},{$push:{itemlist:{$each:["Biscuit","Milk"]}}})
+
+//$unwind
+//Display each item details where storelocation is Mira road
+> db.customers.aggregate([{$match:{"storelocation":"Mira road"}},{$unwind:"$items"},{$project:{name:1,storelocation:1,items:1}}])
+
+//$slice
+// Display only one item in itemlist where age is greater than 25
+> db.customers.find({age:{$gt:25}},{itemlist:{$slice:1}}).pretty()
+
+//$slice with update
+//Insert Earphone and Pen and let the size of array be 3
+> db.customers.update({name:"Mrunal"},{$push:{itemlist:{$each:["Earphone","Pen"],$slice:-3}}})
+WriteResult({ "nMatched" : 1, "nUpserted" : 0, "nModified" : 1 })
