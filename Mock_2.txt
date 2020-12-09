@@ -1,0 +1,550 @@
+> db
+mock
+> db.movie.insert({
+... title:"Titan A.E",
+... year:2000,
+... genres:["Animation","Action","Adventure"],
+... runtime:94,
+... imdb:{
+... rating:6.6,
+... votes:50875},
+... type:"Movie"})
+WriteResult({ "nInserted" : 1 })
+> db.movie.find().pretty()
+{
+        "_id" : ObjectId("5fcb46d0396e646df1f5b2e9"),
+        "title" : "Titan A.E",
+        "year" : 2000,
+        "genres" : [
+                "Animation",
+                "Action",
+                "Adventure"
+        ],
+        "runtime" : 94,
+        "imdb" : {
+                "rating" : 6.6,
+                "votes" : 50875
+        },
+        "type" : "Movie"
+}
+> db.movie.insertMany([{ title:"Stuart little", year:1999, genres:[ "Adventure", "Comedy", "Family"], runtime:84, imdb:{ rating:5.9, votes:87286}, type:"Movie"}, {title:"How I Met Your Mother", year:2005, genres:[ "Comedy", "Romance"], runtime:22, imdb:{ rating:8.3, votes:542336}, type:"TV series"}, {title:"Breaking Bad", year:2008, genres:[ "Crime", "Thriller"], runtime:49, imdb:{ rating:9.5, votes:1278333}, type:"TV series"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("5fcb4a28396e646df1f5b2ea"),
+                ObjectId("5fcb4a28396e646df1f5b2eb"),
+                ObjectId("5fcb4a28396e646df1f5b2ec")
+        ]
+}
+> db.movie.find().pretty()
+{
+        "_id" : ObjectId("5fcb46d0396e646df1f5b2e9"),
+        "title" : "Titan A.E",
+        "year" : 2000,
+        "genres" : [
+                "Animation",
+                "Action",
+                "Adventure"
+        ],
+        "runtime" : 94,
+        "imdb" : {
+                "rating" : 6.6,
+                "votes" : 50875
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4a28396e646df1f5b2ea"),
+        "title" : "Stuart little",
+        "year" : 1999,
+        "genres" : [
+                "Adventure",
+                "Comedy",
+                "Family"
+        ],
+        "runtime" : 84,
+        "imdb" : {
+                "rating" : 5.9,
+                "votes" : 87286
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4a28396e646df1f5b2eb"),
+        "title" : "How I Met Your Mother",
+        "year" : 2005,
+        "genres" : [
+                "Comedy",
+                "Romance"
+        ],
+        "runtime" : 22,
+        "imdb" : {
+                "rating" : 8.3,
+                "votes" : 542336
+        },
+        "type" : "TV series"
+}
+{
+        "_id" : ObjectId("5fcb4a28396e646df1f5b2ec"),
+        "title" : "Breaking Bad",
+        "year" : 2008,
+        "genres" : [
+                "Crime",
+                "Thriller"
+        ],
+        "runtime" : 49,
+        "imdb" : {
+                "rating" : 9.5,
+                "votes" : 1278333
+        },
+        "type" : "TV series"
+}
+> db.movie.insertMany([{ title:"Shutter Island", year:2010, genres:[ "Mystery", "Thriller"], runtime:138, imdb:{ rating:8.2, votes:8728645}, type:"Movie"}, {title:"The Departed", year:2006, genres:[ "Crime", "Thriller"], runtime:140, imdb:{ rating:8.5, votes:54233688}, type:"Movie"}, {title:"The Office", year:2005, genres:[ "Comedy"], runtime:22, imdb:{ rating:8.9, votes:1278333}, type:"TV series"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("5fcb4b7d396e646df1f5b2ed"),
+                ObjectId("5fcb4b7d396e646df1f5b2ee"),
+                ObjectId("5fcb4b7d396e646df1f5b2ef")
+        ]
+}
+> db.movie.count()
+7
+> db.movie.insertMany([{ title:"Fight Club", year:1999, genres:[ "Drama"], runtime:130, imdb:{ rating:8.8, votes:9728645}, type:"Movie"}, {title:"Inception", year:2010, genres:[ "Adventure", "Sci-Fi","Action"], runtime:142, imdb:{ rating:8.8, votes:74233688}, type:"Movie"}, {title:"Modern Family", year:2009, genres:[ "Comedy"], runtime:22, imdb:{ rating:8.4, votes:427833}, type:"TV series"}])
+{
+        "acknowledged" : true,
+        "insertedIds" : [
+                ObjectId("5fcb4cdb396e646df1f5b2f0"),
+                ObjectId("5fcb4cdb396e646df1f5b2f1"),
+                ObjectId("5fcb4cdb396e646df1f5b2f2")
+        ]
+}
+> db.movie.count()
+10
+> //Single_key_index
+> db.movie.createIndex({title:1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 1,
+        "numIndexesAfter" : 2,
+        "ok" : 1
+}
+> db.movie.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "title" : 1
+                },
+                "name" : "title_1"
+        }
+]
+> //Compund_key_index
+> db.movie.createIndex({year:1,runtime:1})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 2,
+        "numIndexesAfter" : 3,
+        "ok" : 1
+}
+> db.movie.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "title" : 1
+                },
+                "name" : "title_1"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "year" : 1,
+                        "runtime" : 1
+                },
+                "name" : "year_1_runtime_1"
+        }
+]
+> db.movie.dropIndex("title_1")
+{ "nIndexesWas" : 3, "ok" : 1 }
+> db.movie.createIndex({title:1},{unique:true})
+{
+        "createdCollectionAutomatically" : false,
+        "numIndexesBefore" : 2,
+        "numIndexesAfter" : 3,
+        "ok" : 1
+}
+> db.movie.getIndexes()
+[
+        {
+                "v" : 2,
+                "key" : {
+                        "_id" : 1
+                },
+                "name" : "_id_"
+        },
+        {
+                "v" : 2,
+                "key" : {
+                        "year" : 1,
+                        "runtime" : 1
+                },
+                "name" : "year_1_runtime_1"
+        },
+        {
+                "v" : 2,
+                "unique" : true,
+                "key" : {
+                        "title" : 1
+                },
+                "name" : "title_1"
+        }
+]
+> db.movie.find({title:"The Office"}).explain("executionStats")
+{
+        "queryPlanner" : {
+                "plannerVersion" : 1,
+                "namespace" : "mock.movie",
+                "indexFilterSet" : false,
+                "parsedQuery" : {
+                        "title" : {
+                                "$eq" : "The Office"
+                        }
+                },
+                "winningPlan" : {
+                        "stage" : "FETCH",
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "keyPattern" : {
+                                        "title" : 1
+                                },
+                                "indexName" : "title_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "title" : [ ]
+                                },
+                                "isUnique" : true,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "title" : [
+                                                "[\"The Office\", \"The Office\"]"
+                                        ]
+                                }
+                        }
+                },
+                "rejectedPlans" : [ ]
+        },
+        "executionStats" : {
+                "executionSuccess" : true,
+                "nReturned" : 1,
+                "executionTimeMillis" : 14,
+                "totalKeysExamined" : 1,
+                "totalDocsExamined" : 1,
+                "executionStages" : {
+                        "stage" : "FETCH",
+                        "nReturned" : 1,
+                        "executionTimeMillisEstimate" : 0,
+                        "works" : 2,
+                        "advanced" : 1,
+                        "needTime" : 0,
+                        "needYield" : 0,
+                        "saveState" : 0,
+                        "restoreState" : 0,
+                        "isEOF" : 1,
+                        "docsExamined" : 1,
+                        "alreadyHasObj" : 0,
+                        "inputStage" : {
+                                "stage" : "IXSCAN",
+                                "nReturned" : 1,
+                                "executionTimeMillisEstimate" : 0,
+                                "works" : 2,
+                                "advanced" : 1,
+                                "needTime" : 0,
+                                "needYield" : 0,
+                                "saveState" : 0,
+                                "restoreState" : 0,
+                                "isEOF" : 1,
+                                "keyPattern" : {
+                                        "title" : 1
+                                },
+                                "indexName" : "title_1",
+                                "isMultiKey" : false,
+                                "multiKeyPaths" : {
+                                        "title" : [ ]
+                                },
+                                "isUnique" : true,
+                                "isSparse" : false,
+                                "isPartial" : false,
+                                "indexVersion" : 2,
+                                "direction" : "forward",
+                                "indexBounds" : {
+                                        "title" : [
+                                                "[\"The Office\", \"The Office\"]"
+                                        ]
+                                },
+                                "keysExamined" : 1,
+                                "seeks" : 1,
+                                "dupsTested" : 0,
+                                "dupsDropped" : 0
+                        }
+                }
+        },
+        "serverInfo" : {
+                "host" : "DESKTOP-CJ9DP4V",
+                "port" : 27017,
+                "version" : "4.4.1",
+                "gitVersion" : "ad91a93a5a31e175f5cbf8c69561e788bbc55ce1"
+        },
+        "ok" : 1
+}
+> //Count command
+> db.movie.count()
+10
+> db.movie.distinct("title")
+[
+        "Breaking Bad",
+        "Fight Club",
+        "How I Met Your Mother",
+        "Inception",
+        "Modern Family",
+        "Shutter Island",
+        "Stuart little",
+        "The Departed",
+        "The Office",
+        "Titan A.E"
+]
+> db.movie.distinct('title',{"runtime":{$gt:100}})
+[ "Fight Club", "Inception", "Shutter Island", "The Departed" ]
+
+> db.movie.aggregate({$match:{year:{$gt:2000}}})
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2eb"), "title" : "How I Met Your Mother", "year" : 2005, "genres" : [ "Comedy", "Romance" ], "runtime" : 22, "imdb" : { "rating" : 8.3, "votes" : 542336 }, "type" : "TV series" }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ef"), "title" : "The Office", "year" : 2005, "genres" : [ "Comedy" ], "runtime" : 22, "imdb" : { "rating" : 8.9, "votes" : 1278333 }, "type" : "TV series" }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ee"), "title" : "The Departed", "year" : 2006, "genres" : [ "Crime", "Thriller" ], "runtime" : 140, "imdb" : { "rating" : 8.5, "votes" : 54233688 }, "type" : "Movie" }
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2ec"), "title" : "Breaking Bad", "year" : 2008, "genres" : [ "Crime", "Thriller" ], "runtime" : 49, "imdb" : { "rating" : 9.5, "votes" : 1278333 }, "type" : "TV series" }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f2"), "title" : "Modern Family", "year" : 2009, "genres" : [ "Comedy" ], "runtime" : 22, "imdb" : { "rating" : 8.4, "votes" : 427833 }, "type" : "TV series" }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ed"), "title" : "Shutter Island", "year" : 2010, "genres" : [ "Mystery", "Thriller" ], "runtime" : 138, "imdb" : { "rating" : 8.2, "votes" : 8728645 }, "type" : "Movie" }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f1"), "title" : "Inception", "year" : 2010, "genres" : [ "Adventure", "Sci-Fi", "Action" ], "runtime" : 142, "imdb" : { "rating" : 8.8, "votes" : 74233688 }, "type" : "Movie" }
+
+> db.movie.aggregate({$match:{year:{$gt:2000}}}).pretty()
+{
+        "_id" : ObjectId("5fcb4a28396e646df1f5b2eb"),
+        "title" : "How I Met Your Mother",
+        "year" : 2005,
+        "genres" : [
+                "Comedy",
+                "Romance"
+        ],
+        "runtime" : 22,
+        "imdb" : {
+                "rating" : 8.3,
+                "votes" : 542336
+        },
+        "type" : "TV series"
+}
+{
+        "_id" : ObjectId("5fcb4b7d396e646df1f5b2ef"),
+        "title" : "The Office",
+        "year" : 2005,
+        "genres" : [
+                "Comedy"
+        ],
+        "runtime" : 22,
+        "imdb" : {
+                "rating" : 8.9,
+                "votes" : 1278333
+        },
+        "type" : "TV series"
+}
+{
+        "_id" : ObjectId("5fcb4b7d396e646df1f5b2ee"),
+        "title" : "The Departed",
+        "year" : 2006,
+        "genres" : [
+                "Crime",
+                "Thriller"
+        ],
+        "runtime" : 140,
+        "imdb" : {
+                "rating" : 8.5,
+                "votes" : 54233688
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4a28396e646df1f5b2ec"),
+        "title" : "Breaking Bad",
+        "year" : 2008,
+        "genres" : [
+                "Crime",
+                "Thriller"
+        ],
+        "runtime" : 49,
+        "imdb" : {
+                "rating" : 9.5,
+                "votes" : 1278333
+        },
+        "type" : "TV series"
+}
+{
+        "_id" : ObjectId("5fcb4cdb396e646df1f5b2f2"),
+        "title" : "Modern Family",
+        "year" : 2009,
+        "genres" : [
+                "Comedy"
+        ],
+        "runtime" : 22,
+        "imdb" : {
+                "rating" : 8.4,
+                "votes" : 427833
+        },
+        "type" : "TV series"
+}
+{
+        "_id" : ObjectId("5fcb4b7d396e646df1f5b2ed"),
+        "title" : "Shutter Island",
+        "year" : 2010,
+        "genres" : [
+                "Mystery",
+                "Thriller"
+        ],
+        "runtime" : 138,
+        "imdb" : {
+                "rating" : 8.2,
+                "votes" : 8728645
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4cdb396e646df1f5b2f1"),
+        "title" : "Inception",
+        "year" : 2010,
+        "genres" : [
+                "Adventure",
+                "Sci-Fi",
+                "Action"
+        ],
+        "runtime" : 142,
+        "imdb" : {
+                "rating" : 8.8,
+                "votes" : 74233688
+        },
+        "type" : "Movie"
+}
+
+> db.movie.aggregate([{$match:{year:{$gt:2000}}},{$project:{title:1,year:1,runtime:1}}])
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2eb"), "title" : "How I Met Your Mother", "year" : 2005, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ef"), "title" : "The Office", "year" : 2005, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ee"), "title" : "The Departed", "year" : 2006, "runtime" : 140 }
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2ec"), "title" : "Breaking Bad", "year" : 2008, "runtime" : 49 }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f2"), "title" : "Modern Family", "year" : 2009, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ed"), "title" : "Shutter Island", "year" : 2010, "runtime" : 138 }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f1"), "title" : "Inception", "year" : 2010, "runtime" : 142 }
+> db.movie.aggregate([{$match:{year:{$gt:2000}}},{$project:{title:1,year:1,runtime:1}},{$sort:{"runtime":1}}])
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2eb"), "title" : "How I Met Your Mother", "year" : 2005, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ef"), "title" : "The Office", "year" : 2005, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f2"), "title" : "Modern Family", "year" : 2009, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2ec"), "title" : "Breaking Bad", "year" : 2008, "runtime" : 49 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ed"), "title" : "Shutter Island", "year" : 2010, "runtime" : 138 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ee"), "title" : "The Departed", "year" : 2006, "runtime" : 140 }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f1"), "title" : "Inception", "year" : 2010, "runtime" : 142 }
+
+//Aggregation pipeline $match, $project, $sort, $skip
+> db.movie.aggregate([{$match:{year:{$gt:2000}}},{$project:{title:1,year:1,runtime:1}},{$sort:{"runtime":1}},{$skip:2}])
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f2"), "title" : "Modern Family", "year" : 2009, "runtime" : 22 }
+{ "_id" : ObjectId("5fcb4a28396e646df1f5b2ec"), "title" : "Breaking Bad", "year" : 2008, "runtime" : 49 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ed"), "title" : "Shutter Island", "year" : 2010, "runtime" : 138 }
+{ "_id" : ObjectId("5fcb4b7d396e646df1f5b2ee"), "title" : "The Departed", "year" : 2006, "runtime" : 140 }
+{ "_id" : ObjectId("5fcb4cdb396e646df1f5b2f1"), "title" : "Inception", "year" : 2010, "runtime" : 142 }
+
+
+> db.movie.aggregate({$match:{'runtime':{$gt:100}}}).pretty()
+{
+        "_id" : ObjectId("5fcb4b7d396e646df1f5b2ed"),
+        "title" : "Shutter Island",
+        "year" : 2010,
+        "genres" : [
+                "Mystery",
+                "Thriller"
+        ],
+        "runtime" : 138,
+        "imdb" : {
+                "rating" : 8.2,
+                "votes" : 8728645
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4b7d396e646df1f5b2ee"),
+        "title" : "The Departed",
+        "year" : 2006,
+        "genres" : [
+                "Crime",
+                "Thriller"
+        ],
+        "runtime" : 140,
+        "imdb" : {
+                "rating" : 8.5,
+                "votes" : 54233688
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4cdb396e646df1f5b2f0"),
+        "title" : "Fight Club",
+        "year" : 1999,
+        "genres" : [
+                "Drama"
+        ],
+        "runtime" : 130,
+        "imdb" : {
+                "rating" : 8.8,
+                "votes" : 9728645
+        },
+        "type" : "Movie"
+}
+{
+        "_id" : ObjectId("5fcb4cdb396e646df1f5b2f1"),
+        "title" : "Inception",
+        "year" : 2010,
+        "genres" : [
+                "Adventure",
+                "Sci-Fi",
+                "Action"
+        ],
+        "runtime" : 142,
+        "imdb" : {
+                "rating" : 8.8,
+                "votes" : 74233688
+        },
+        "type" : "Movie"
+}
+> db.movie.aggregate([{$match:{runtime:{$gt:100}}},{$group:{'_id':'$imdb.rating','allmovies':{'$sum':1}}}])
+{ "_id" : 8.5, "allmovies" : 1 }
+{ "_id" : 8.2, "allmovies" : 1 }
+{ "_id" : 8.8, "allmovies" : 2 }
+> db.movie.aggregate([{$match:{runtime:{$gt:100}}},{$group:{'_id':'$imdb.rating','allmovies':{'$sum':1}}},{$sort:{"_id":1}}])
+{ "_id" : 8.2, "allmovies" : 1 }
+{ "_id" : 8.5, "allmovies" : 1 }
+{ "_id" : 8.8, "allmovies" : 2 }
+
+//Aggregation $match, $group, $sort, $limit
+> db.movie.aggregate([{$match:{runtime:{$gt:100}}},{$group:{'_id':'$imdb.rating','allmovies':{'$sum':1}}},{$sort:{"_id":1}},{$limit:2}])
+{ "_id" : 8.2, "allmovies" : 1 }
+{ "_id" : 8.5, "allmovies" : 1 }
